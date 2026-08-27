@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: location-service
+
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/locationdb?createDatabaseIfNotExist=true
+    username: root
+    password: ankur@1234
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  port: 5004

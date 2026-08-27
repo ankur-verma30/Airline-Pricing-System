@@ -1,0 +1,61 @@
+package com.aviator.location_service.model;
+
+import java.beans.Transient;
+
+import com.aviator.embeddable.Address;
+import com.aviator.embeddable.GeoCode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Builder
+public class Airport {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(unique = true, nullable = false, length = 3)
+    private String iataCode;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Embedded
+    private Address address;
+
+    @Embedded
+    private GeoCode geoCode;
+
+    @Column
+    private String timezoneId;
+
+    @ManyToOne
+    @JsonIgnore
+    private City city;
+
+
+    @JsonIgnore
+    @Transient
+    public String getDetailedName(){
+        if(city!=null && city.getCountryCode()!=null){
+            return name.toUpperCase() + "/" + city.getCityCode();
+        }
+
+        return name.toUpperCase();
+    }
+}
