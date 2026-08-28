@@ -1,7 +1,5 @@
 {
     "configurations": [
-        
-
         {
             "type": "java",
             "name": "Spring Boot-LocationServiceApplication<location-service>",
@@ -9,6 +7,17 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "com.aviator.location_service.LocationServiceApplication",
             "projectName": "location-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=50178 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=location-service"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-UserServiceApplication<user-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.aviator.user_service.UserServiceApplication",
+            "projectName": "user-service",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }

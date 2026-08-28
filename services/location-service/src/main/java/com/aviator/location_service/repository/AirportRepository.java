@@ -10,6 +10,8 @@ public interface AirportRepository extends JpaRepository<Airport, Long> {
 
     public Optional<Airport> findByIataCode(String iataCode);
 
+    Optional<Airport> findByIataCodeAndIdNot(String iataCode, Long id);
+
     public List<Airport> findByCityId(Long id);
 
 

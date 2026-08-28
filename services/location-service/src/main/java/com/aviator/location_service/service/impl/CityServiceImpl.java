@@ -25,7 +25,6 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public CityResponse createCity(CityRequest cityRequest) throws ResourceNotFoundException {
-
         logger.info("Creating city with name: {}", cityRequest.getName());
         if (cityRepository.existsByCityCode(cityRequest.getCityCode())) {
             throw new ResourceNotFoundException("City with code " + cityRequest.getCityCode() + " already exists");

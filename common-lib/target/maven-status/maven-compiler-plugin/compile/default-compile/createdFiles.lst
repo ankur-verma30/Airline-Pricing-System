@@ -1,0 +1,5 @@
+com\aviator\embeddable\Address.class
+com\aviator\embeddable\GeoCode$GeoCodeBuilder.class
+com\aviator\embeddable\GeoCode.class
+com\aviator\payload\response\ApiResponse.class
+com\aviator\embeddable\Address$AddressBuilder.class

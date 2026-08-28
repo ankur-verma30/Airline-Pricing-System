@@ -48,27 +48,58 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override
-    public AirportResponse updateAirport(Long id, AirportRequest airportRequest) {
-        Airport airport = airportRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("The Airport do not exist"));
+public AirportResponse updateAirport(Long id, AirportRequest airportRequest) {
 
-        if (airportRequest.getIataCode() != null && !airport.getIataCode().equals(airportRequest.getIataCode())
-                && airportRepository.findByIataCode(airportRequest.getIataCode()).isPresent()) {
-            throw new IllegalArgumentException(
-                    "The " + airport.getName() + " already exists for this IATA code");
-        }
+    Airport airport = airportRepository.findById(id)
+            .orElseThrow(() ->
+                    new ResourceNotFoundException("The Airport does not exist"));
 
-        airport.setIataCode(
-                airportRequest.getIataCode() != null ? airportRequest.getIataCode() : airport.getIataCode());
-        airport.setName(airportRequest.getName() != null ? airportRequest.getName() : airport.getName());
-        airport.setTimezoneId(
-                airportRequest.getTimeZoneId() != null ? airportRequest.getTimeZoneId() : airport.getTimezoneId());
-        airport.setAddress(airportRequest.getAddress() != null ? airportRequest.getAddress() : airport.getAddress());
-        airport.setGeoCode(airportRequest.getGeoCode() != null ? airportRequest.getGeoCode() : airport.getGeoCode());
-        airportRepository.save(airport);
+    if (airportRequest.getIataCode() != null) {
 
-        return AirportMapper.AirportEntityToAirportResponse(airport);
+        airportRepository
+                .findByIataCodeAndIdNot(airportRequest.getIataCode(), id)
+                .ifPresent(existingAirport -> {
+                    throw new IllegalArgumentException(
+                            "The IATA code "
+                                    + airportRequest.getIataCode()
+                                    + " is already used by another airport"
+                    );
+                });
+    }
 
+    airport.setIataCode(
+            airportRequest.getIataCode() != null
+                    ? airportRequest.getIataCode()
+                    : airport.getIataCode()
+    );
+
+    airport.setName(
+            airportRequest.getName() != null
+                    ? airportRequest.getName()
+                    : airport.getName()
+    );
+
+    airport.setTimezoneId(
+            airportRequest.getTimeZoneId() != null
+                    ? airportRequest.getTimeZoneId()
+                    : airport.getTimezoneId()
+    );
+
+    airport.setAddress(
+            airportRequest.getAddress() != null
+                    ? airportRequest.getAddress()
+                    : airport.getAddress()
+    );
+
+    airport.setGeoCode(
+            airportRequest.getGeoCode() != null
+                    ? airportRequest.getGeoCode()
+                    : airport.getGeoCode()
+    );
+
+    Airport updatedAirport = airportRepository.save(airport);
+
+    return AirportMapper.AirportEntityToAirportResponse(updatedAirport);
     }
 
     @Override

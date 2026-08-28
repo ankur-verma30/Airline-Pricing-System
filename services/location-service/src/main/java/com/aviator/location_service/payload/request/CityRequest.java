@@ -32,4 +32,7 @@ public class CityRequest {
     @NotBlank(message = "Country name is required")
     @Size(max = 100, message = "Country name must not exceed 100 characters")
     private String countryName;
+
+    @NotBlank(message = "time zone id is required")
+    private String timeZoneId;
 }
