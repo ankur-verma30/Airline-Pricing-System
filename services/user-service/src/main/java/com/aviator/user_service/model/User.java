@@ -36,6 +36,9 @@ public class User {
     @Email(message="Please provide a valid email address")
     private String email;
 
+    @Column(nullable=false)
+    private String password;
+
     private String phone;
 
     @Column(nullable=false)
@@ -48,5 +51,4 @@ public class User {
     private LocalDateTime updatedAt;
 
     private LocalDateTime lastLogin;
-
 }
